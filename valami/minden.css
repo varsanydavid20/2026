@@ -1,0 +1,49 @@
+/* ---- VIDEO OLDAL ---- */
+.video-page {
+  background: radial-gradient(circle at top, #111, #000);
+  color: white;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  padding:20px;
+}
+
+.video-container {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+}
+
+.video-container h1 {
+  font-size:42px;
+  text-align:center;
+  color:white;
+}
+
+.video-container iframe {
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.25);
+  max-width: 90%;
+  max-height: 60vh;
+}
+
+/* BAL FELSŐ VISSZA GOMB */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background: rgba(255,255,255,0.15);
+  padding: 10px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+.back-btn:hover {background: rgba(255,255,255,0.35);}
