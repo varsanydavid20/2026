@@ -3,24 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>2025 legszebb pillanatai</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .video-frame {position:relative; width:90%; max-width:1200px;}
+    .video-frame iframe {width:100%; height:60vh; border-radius:16px; display:block;}
+    .video-frame .overlay {
+      position:absolute; inset:0; cursor:pointer; background:transparent; border-radius:16px;
+      display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.85);
+      font-weight:600; text-shadow:0 2px 8px rgba(0,0,0,0.6);
+    }
+    .video-frame .overlay:hover {background:rgba(0,0,0,0.08);} 
+  </style>
 </head>
 <body class="video-page">
 
 <!-- BAL FELSŐ VISSZA GOMB -->
-<a href="index.html" class="back-btn">⬅ Vissza</a>
+<a href="../index.html" class="back-btn">⬅ Vissza</a>
 
 <div class="video-container">
-  <h1>2025 legszebb pillanatai ✨</h1>
+  <h1>2025 legszebb pillanatai</h1>
 
-  <!-- YOUTUBE VIDEÓ -->
-  <iframe width="90%" height="60%" 
-          src="https://www.youtube.com/embed/U0qvSxh1HXc?autoplay=1&mute=1" 
-          title="2025 legszebb pillanatai" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-  </iframe>
+    <!-- YOUTUBE VIDEÓ -->
+    <div class="video-frame">
+      <iframe 
+        src="https://www.youtube.com/embed/kkzz7QRe1w0?autoplay=1&mute=1" 
+        title="2025 legszebb pillanatai" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen>
+      </iframe>
+      <div class="overlay" id="videoOverlay">Kattints a teljes képernyőhöz</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const iframe = document.querySelector('.video-frame iframe');
+      const overlay = document.getElementById('videoOverlay');
+      overlay.addEventListener('click', async () => {
+        try {
+          if (iframe.requestFullscreen) await iframe.requestFullscreen();
+          else if (iframe.webkitRequestFullscreen) await iframe.webkitRequestFullscreen();
+          else if (iframe.mozRequestFullScreen) await iframe.mozRequestFullScreen();
+          else if (iframe.msRequestFullscreen) await iframe.msRequestFullscreen();
+          overlay.style.display = 'none';
+        } catch (e) {
+          console.warn('Fullscreen request failed', e);
+        }
+      });
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) overlay.style.display = '';
+      });
+    })();
+  </script>
 </div>
 
 </body>
