@@ -11,9 +11,9 @@ window.addEventListener("resize", resize);
 const fireworks = [];
 const particles = [];
 let time = 0;
-let introDone = false;
+let started = false; // <--- új változó: mikor indítjuk
 
-// ====== FIREWORK ROCKET ======
+// ===== FIREWORK ROCKET =====
 class Firework {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -37,7 +37,7 @@ class Firework {
   }
 }
 
-// ====== PARTICLE ======
+// ===== PARTICLE =====
 class Particle {
   constructor(x, y, angle, speed, color, big = false) {
     this.x = x;
@@ -65,43 +65,31 @@ class Particle {
   }
 }
 
-// ====== EXPLOSION ======
+// ===== EXPLOSION =====
 function explode(x, y, count, big) {
   const hue = Math.random() * 360;
 
   for (let i = 0; i < count; i++) {
     const angle = (Math.PI * 2 / count) * i;
-    const speed = big
-      ? Math.random() * 10 + 6
-      : Math.random() * 4 + 2;
-
+    const speed = big ? Math.random() * 10 + 6 : Math.random() * 4 + 2;
     const color = `hsl(${hue},100%,60%)`;
     particles.push(new Particle(x, y, angle, speed, color, big));
   }
 }
 
-// ====== BIG INTRO EXPLOSION ======
-function bigIntroFirework() {
+// ===== BIG INTRO FIREWORK =====
+function bigFirework() {
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
 
   for (let i = 0; i < 6; i++) {
     setTimeout(() => {
-      explode(
-        centerX,
-        centerY,
-        300,
-        true
-      );
+      explode(centerX, centerY, 300, true);
     }, i * 250);
   }
-
-  setTimeout(() => {
-    introDone = true;
-  }, 1800);
 }
 
-// ====== TEXT ======
+// ===== TEXT =====
 function drawText() {
   const scale = 1 + Math.sin(time * 0.05) * 0.03;
 
@@ -118,7 +106,15 @@ function drawText() {
   ctx.restore();
 }
 
-// ====== MAIN LOOP ======
+// ===== KEY EVENT =====
+window.addEventListener("keydown", (e) => {
+  if (e.key === "1" && !started) {
+    started = true; // csak egyszer indítjuk
+    bigFirework();
+  }
+});
+
+// ===== MAIN LOOP =====
 function loop() {
   time++;
 
@@ -127,7 +123,7 @@ function loop() {
 
   drawText();
 
-  if (introDone && Math.random() < 0.04) {
+  if (started && Math.random() < 0.04) {
     fireworks.push(new Firework());
   }
 
@@ -146,6 +142,6 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-// ====== START ======
-bigIntroFirework();
+// ===== START LOOP =====
 loop();
+  
